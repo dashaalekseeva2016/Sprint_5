@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+.pytest_cache/
+.coverage
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Selenium
+*.log
+screenshots/
+test-results/
+geckodriver*
+chromedriver*
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Конфиги с паролями
+.env
+*.env
+secrets.ini
+config.local.*
