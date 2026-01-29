@@ -1,0 +1,8 @@
+DEFAULT_WAIT = 10
+SHORT_WAIT = 3
+
+PASSWORD_MIN_LENGTH = 6
+
+ERROR_MESSAGES = {
+    "Некорректный пароль"
+}

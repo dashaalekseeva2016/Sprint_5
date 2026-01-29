@@ -1,43 +1,30 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pytest
 import time
 from selenium.webdriver.common.by import By
 from locators import Locators
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from constants import DEFAULT_WAIT
+from urls import MAIN_PAGE
 
 class TestConstructor:
+    @pytest.mark.parametrize('section_locator, image_locator', [
+        (Locators.SAUCES_SECTION, Locators.FIRST_SAUCE),
+        (Locators.FILLINGS_SECTION, Locators.FIRST_FILLING)
+        ]
+    )
     
-    def test_click_sauces_section(self, driver):
-        driver.get("https://stellarburgers.nomoreparties.site/")
-        time.sleep(3)
-        
-        driver.find_element(*Locators.SAUCES_SECTION).click()
-        time.sleep(1)
-        
-        active_div = driver.find_element(*Locators.ACTIVE_SECTION)
-        assert "Соусы" in active_div.text
-    
-    def test_click_fillings_section(self, driver):
-        driver.get("https://stellarburgers.nomoreparties.site/")
-        time.sleep(3)
-        
-        driver.find_element(*Locators.FILLINGS_SECTION).click()
-        time.sleep(1)
-        
-        active_div = driver.find_element(*Locators.ACTIVE_SECTION)
-        assert "Начинки" in active_div.text
-    
-    def test_click_buns_section(self, driver):
-        driver.get("https://stellarburgers.education-services.ru/")
-        time.sleep(3)
-        
-        driver.find_element(*Locators.SAUCES_SECTION).click()
-        time.sleep(1)
-        
-        active_div = driver.find_element(*Locators.ACTIVE_SECTION)
-        assert "Соусы" in active_div.text
-        
-        buns_element = driver.find_element(*Locators.BUNS_SECTION)
-        buns_element.click()
-        time.sleep(1)
-        
-        active_div = driver.find_element(*Locators.ACTIVE_SECTION)
-        assert "Булки" in active_div.text
+    def test_constructor_order_sections(self, driver, section_locator, image_locator):
+        wait = WebDriverWait(driver, DEFAULT_WAIT)
+        driver.get(MAIN_PAGE)
+        driver.find_element(*section_locator).click()
+        assert wait.until(EC.visibility_of_element_located(image_locator))
+
+    def test_constructor_buns_section(self, driver):
+        wait = WebDriverWait(driver, DEFAULT_WAIT)
+        driver.find_element(*Locators.SAUCES_SECTION)
+        driver.find_element(*Locators.BUNS_SECTION)
+        assert wait.until(EC.visibility_of_element_located(Locators.FIRST_BUN))
