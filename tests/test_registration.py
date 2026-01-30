@@ -13,18 +13,19 @@ from generators import DataGenerator
 
 class TestRegistrationWithNewCredentials:
     def test_success_register(self, driver):
+
+        wait = WebDriverWait(driver, DEFAULT_WAIT)
+        driver.get(MAIN_PAGE) 
+
         user_data = TestUsers.get_valid_users()
         name = user_data["name"]
         email = user_data["email"]
         password = user_data["password"]
 
-        wait = WebDriverWait(driver, DEFAULT_WAIT)
-        driver.get(MAIN_PAGE)
+        driver.find_element(*Locators.LOGIN_BUTTON).click()
+        driver.find_element(*Locators.REGISTER_LINK).click()
 
-        wait.until(EC.element_to_be_clickable(Locators.LOGIN_BUTTON)).click()
-        wait.until(EC.element_to_be_clickable(Locators.REGISTER_LINK)).click()
-
-        wait.until(EC.visibility_of_element_located(Locators.REG_NAME)).send_keys(name)
+        driver.find_element(*Locators.REG_NAME).send_keys(name)
         driver.find_element(*Locators.REG_EMAIL).send_keys(email)
         driver.find_element(*Locators.REG_PASSWORD).send_keys(password)
 
@@ -35,18 +36,19 @@ class TestRegistrationWithNewCredentials:
         assert "/login" in driver.current_url
        
     def test_registration_with_short_password_error(self, driver):
+
+        wait = WebDriverWait(driver, DEFAULT_WAIT)
+        driver.get(MAIN_PAGE)
+
         user_data = TestUsers.get_user_with_short_password()
         name = user_data["name"]
         email = user_data["email"]
         password = user_data["password"] 
 
-        wait = WebDriverWait(driver, DEFAULT_WAIT)
-        driver.get(MAIN_PAGE)
+        driver.find_element(*Locators.LOGIN_BUTTON).click()
+        driver.find_element(*Locators.REGISTER_LINK).click()
 
-        wait.until(EC.element_to_be_clickable(Locators.LOGIN_BUTTON)).click()
-        wait.until(EC.element_to_be_clickable(Locators.REGISTER_LINK)).click()
-
-        wait.until(EC.visibility_of_element_located(Locators.REG_NAME)).send_keys(name)
+        driver.find_element(*Locators.REG_NAME).send_keys(name)
         driver.find_element(*Locators.REG_EMAIL).send_keys(email)
         driver.find_element(*Locators.REG_PASSWORD).send_keys(password)
 

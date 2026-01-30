@@ -1,6 +1,11 @@
 from generators import DataGenerator
 import random
 
+class Credentials:
+        name = "Дарья Алексеева",
+        email = "AlekseevaD_39@mail.ru",
+        password = "123456"
+
 class TestUsers:
     @staticmethod
     def get_valid_users():
@@ -17,11 +22,7 @@ class TestUsers:
             "email": "darya@example.com",
             "password": "123"  
         }
-    FIXED_VALID_USER = {
-        "name": "Дарья Алексеева",
-        "email": "darya_alekseeva_39_123@yandex.ru",
-        "password": "Password123"
-        }
+        
     FIXED_SHORT_PASSWORD_USERS = {
         "name": "Дарья Алексеева",
         "email": "darya_alekseeva_39_456@yandex.ru",

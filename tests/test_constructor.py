@@ -17,14 +17,15 @@ class TestConstructor:
         ]
     )
     
-    def test_constructor_order_sections(self, driver, section_locator, image_locator):
-        wait = WebDriverWait(driver, DEFAULT_WAIT)
-        driver.get(MAIN_PAGE)
+    def test_constructor_order_sections(self, driver_main_page, section_locator, image_locator):
+        wait = WebDriverWait(driver_main_page, DEFAULT_WAIT)
+        driver = driver_main_page
         driver.find_element(*section_locator).click()
         assert wait.until(EC.visibility_of_element_located(image_locator))
 
-    def test_constructor_buns_section(self, driver):
-        wait = WebDriverWait(driver, DEFAULT_WAIT)
+    def test_constructor_buns_section(self, driver_main_page):
+        wait = WebDriverWait(driver_main_page, DEFAULT_WAIT)
+        driver = driver_main_page
         driver.find_element(*Locators.SAUCES_SECTION)
         driver.find_element(*Locators.BUNS_SECTION)
         assert wait.until(EC.visibility_of_element_located(Locators.FIRST_BUN))
